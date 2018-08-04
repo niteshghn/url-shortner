@@ -45,8 +45,9 @@ crashlytics-build.properties
 fabric.properties
 
 .gitignore
-templates/
 urlshortner/migrations/0002_urlkeyhash_hits.py
 urlshortner/migrations/0003_auto_20180804_1710.py
 urlshortner/migrations/__pycache__/0002_urlkeyhash_hits.cpython-36.pyc
 urlshortner/migrations/__pycache__/0003_auto_20180804_1710.cpython-36.pyc
+url_shortner/staticfiles/
+.env

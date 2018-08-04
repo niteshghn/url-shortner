@@ -7,7 +7,6 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.context_processors import csrf
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import get_object_or_404
 
 from urlshortner.models import UrlKeyHash
@@ -37,7 +36,6 @@ def get_short_hash():
         except UrlKeyHash.DoesNotExist:
             return code
 
-@csrf_exempt
 def make_tiny_url(request):
     if request.method=='GET':
         return HttpResponse(json.dumps({'error':'Not allowed'}),status=401,content_type='application/json')
