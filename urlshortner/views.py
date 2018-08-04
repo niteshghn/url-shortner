@@ -5,7 +5,7 @@ import string
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template.context_processors import csrf
 from rest_framework.generics import get_object_or_404
 
@@ -15,7 +15,7 @@ from urlshortner.models import UrlKeyHash
 def home(request):
     ctxt = {}
     ctxt.update(csrf(request))
-    return render_to_response('shortenersite/index.html', ctxt)
+    return render(request,'index.html', ctxt)
 
 
 def redirect_to_source(request, hash):

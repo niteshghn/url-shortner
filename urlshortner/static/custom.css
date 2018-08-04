@@ -2,24 +2,27 @@
     margin-top: 20px;
     margin-bottom: 60px;
 }
- 
-a:hover{
+
+a:hover {
     text-decoration: none;
 }
- 
+
 header {
     border-bottom: 1px solid #eeeeee;
     margin-bottom: 30px;
     padding-bottom: 10px;
     clear: both;
 }
- 
+
 #wrap {
     max-width: 700px;
-    margin: 5px 10px 10px 10px;
+    margin-left: auto;
     padding: 10px;
     text-align: left;
+    margin-right: auto;
+    margin-top: 50px;
 }
+
 #url-result {
     color: #00e000;
     display: hidden;
