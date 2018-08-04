@@ -24,6 +24,6 @@ header {
 }
 
 #url-result {
-    color: #00e000;
-    display: hidden;
+    color: #000000;
+    display: block;
 }
