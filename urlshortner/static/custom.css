@@ -26,4 +26,15 @@ header {
 #url-result {
     color: #000000;
     display: block;
+    text-align: center;
+}
+a.ulink {
+    text-decoration:underline;
+    font-size: 16px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.p16{
+    padding: 16px;
 }
