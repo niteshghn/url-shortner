@@ -26,7 +26,7 @@
 
     function returnSuccess(data, textStatus, jqXHR) {
         if (data.short_url) {
-            $('#url-result').html('<a target="_blank" href="http://'+data.short_url+'">'+data.short_url+'</a>');
+            $('#url-result').html('<a target="_blank" href="'+data.short_url+'">'+data.short_url+'</a>');
             $('#url').val("");
         } else {
             $('#url-result').text(data.error);
