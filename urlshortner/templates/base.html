@@ -17,6 +17,7 @@
                 data: {
                     'url': $('#url').val(),
                     'custom_key': $('#custom_key').val(),
+                    'expire_on': $('#expire_on').val(),
                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
                 },
                 success: returnSuccess,
@@ -29,22 +30,25 @@
         if (data.short_url) {
             $('#url-result').html('<a class="ulink" target="_blank" href="' + data.short_url + '">' + data.short_url + '</a>');
             $('#url').val("");
-            $('#custom_key').val("")
+            $('#custom_key').val("");
+            $('#expire_on').val("");
         } else {
             $('#url-result').html('<span style="color:red">' + data.error + '</span>');
         }
 
     }
 </script>
-<body>
-<div id="wrap">
-    <header>
-        <h1><a href="{% url 'home' %}">URL Shortner</a>
-            <small>Shorten the URL</small>
-        </h1>
-    </header>
+<body class="customcolor">
+<div id="container">
+    <div class="row">
+        <header>
+            <h1><a href="{% url 'home' %}">URL Shortner</a>
+                <small>Shorten the URL</small>
+            </h1>
+        </header>
+    </div>
 
-    <div id="content">
+    <div id="row">
         {% block content %}
 
         {% endblock %}

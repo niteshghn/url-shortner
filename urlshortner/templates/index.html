@@ -3,35 +3,83 @@
 {% block title %}URL Shortner - Make your URL shorter!{% endblock %}
 
 {% block content %}
+    <div class="col-md-6">
+        <div class="panel panel-default p16">
+            <div class="panel-body">
 
-    <div class="panel panel-default p16">
-        <div class="panel-body">
+                <div class="form-group">
+                    <label>Long URL</label>
+                    <textarea required="required" cols="20" rows="2" name="url" id="url" class="form-control input-sm"
+                              placeholder="https://www.fabric.io/"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Expiry date (Optional)</label>
+                    <div>
+                        <input type="date" name="expire_on" id="expire_on" class="form-control input-sm" placeholder="4">
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="is_private">This Url is private</label>
+                </div>
+                <div class="form-group">
+                    <label>Custom url (Optional)</label>
+                    <div>
+                        <span>{{ request.get_host }} / <input name="custom_key" id="custom_key" type="text" maxlength="10"></span>
+                    </div>
 
-            <div class="form-group">
-                <label>Long URL</label>
-                <textarea required="required" cols="20" rows="3" name="url" id="url" class="form-control input-sm" placeholder="https://www.fabric.io/"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Expired on (Optional)</label>
-                <div>
-                    <input type="date" name="expire_on" id="expire_on" class="form-control input-sm" placeholder="4">
+                </div>
+                <div class="form-group text-center">
+                    {% csrf_token %}
+                    <button id="submitButton" class="btn-lg btn-primary align-center">Generate link</button>
                 </div>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="is_private">This Url is private</label>
-            </div>
-            <div class="form-group">
-                <label>Custom url (Optional)</label>
-                <div>
-                    <span>{{ request.get_host }} / <input name="custom_key" id="custom_key" type="text" maxlength="10"></span>
-                </div>
-
-            </div>
-            <div class="form-group text-center">
-                {% csrf_token %}
-                <button id="submitButton" class="btn-lg btn-primary align-center">Generate link</button>
-            </div>
+            <div class="panel-footer mt-10" id="shortlink"><span id="url-result">Enter the URL above and click Generate link</span></div>
         </div>
-        <div class="panel-footer mt-10" id="shortlink"><span id="url-result">Enter the URL above and click Generate link</span></div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default p16">
+            <h3>URLs shortened so far</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Short url</th>
+                    <th scope="col">Hits</th>
+                    <th scope="col">Expire on</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for url in urls %}
+                    <tr>
+                        <td><a class="ulink" target="_blank"
+                               href="{% if request.is_secure %}https:// {% else %}http://{% endif %}{{ request.get_host }}/{{ url.key }}">{{ request.get_host }}/{{ url.key }}</a>
+                        </td>
+                        <td>{{ url.hits }}</td>
+                        <td>{{ url.expired_on }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if urls.has_other_pages %}
+                <ul class="pagination">
+                    {% if urls.has_previous %}
+                        <li><a href="?page={{ urls.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in urls.paginator.page_range %}
+                        {% if urls.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if urls.has_next %}
+                        <li><a href="?page={{ urls.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
