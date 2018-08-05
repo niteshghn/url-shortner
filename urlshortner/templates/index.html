@@ -51,7 +51,7 @@
                 {% for url in urls %}
                     <tr>
                         <td><a class="ulink" target="_blank"
-                               href="{% if request.is_secure %}https:// {% else %}http://{% endif %}{{ request.get_host }}/{{ url.key }}">{{ request.get_host }}/{{ url.key }}</a>
+                               href="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/{{ url.key }}">{{ request.get_host }}/{{ url.key }}</a>
                         </td>
                         <td>{{ url.hits }}</td>
                         <td>{{ url.expired_on }}</td>
