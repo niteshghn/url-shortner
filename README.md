@@ -27,3 +27,6 @@ DEBUG=True
 python manage.py migrate
 ```
 5. run `python manage.py runserver` and enjoy. 
+
+## Demo 
+https://url-shortner-nitesh.herokuapp.com/
