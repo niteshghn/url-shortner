@@ -16,6 +16,7 @@
                 url: "/make-tiny/",
                 data: {
                     'url': $('#url').val(),
+                    'custom_key': $('#custom_key').val(),
                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
                 },
                 success: returnSuccess,
@@ -26,10 +27,11 @@
 
     function returnSuccess(data, textStatus, jqXHR) {
         if (data.short_url) {
-            $('#url-result').html('<a class="ulink" target="_blank" href="'+data.short_url+'">'+data.short_url+'</a>');
+            $('#url-result').html('<a class="ulink" target="_blank" href="' + data.short_url + '">' + data.short_url + '</a>');
             $('#url').val("");
+            $('#custom_key').val("")
         } else {
-            $('#url-result').text(data.error);
+            $('#url-result').html('<span style="color:red">' + data.error + '</span>');
         }
 
     }

@@ -15,7 +15,7 @@ from urlshortner.models import UrlKeyHash
 def home(request):
     ctxt = {}
     ctxt.update(csrf(request))
-    return render(request,'index.html', ctxt)
+    return render(request, 'index.html', ctxt)
 
 
 def redirect_to_source(request, hash):
@@ -36,14 +36,30 @@ def get_short_hash():
         except UrlKeyHash.DoesNotExist:
             return code
 
+
+def custom_key_available(custom_key):
+    try:
+        UrlKeyHash.objects.get(key=custom_key)
+        return False
+    except UrlKeyHash.DoesNotExist:
+        return True
+
+
 def make_tiny_url(request):
-    if request.method=='GET':
-        return HttpResponse(json.dumps({'error':'Not allowed'}),status=401,content_type='application/json')
+    if request.method == 'GET':
+        return HttpResponse(json.dumps({'error': 'Not allowed'}), status=401, content_type='application/json')
     long_url = request.POST.get('url')
     if not long_url:
-        return HttpResponse(json.dumps({'error': 'url is required'}), content_type='application/json')
+        return HttpResponse(json.dumps({'error': 'long url is required'}), content_type='application/json')
     is_private = request.POST.get('is_private', False)
-    short_hash = get_short_hash()
-    UrlKeyHash.objects.create(url=long_url, key=short_hash, is_private=is_private)
-    short_url = '{}/{}'.format(settings.SITE_URL, short_hash)
+    custom_key = request.POST.get('custom_key')
+    print(custom_key)
+    if not custom_key:
+        custom_key = get_short_hash()
+    else:
+        if not (custom_key_available(custom_key) or len(custom_key) < 10):
+            return HttpResponse(json.dumps({'error': 'Custom key not available or too long'}), status=400, content_type='application/json')
+
+    UrlKeyHash.objects.create(url=long_url, key=custom_key, is_private=is_private)
+    short_url = '{}/{}'.format(settings.SITE_URL, custom_key)
     return HttpResponse(json.dumps({'short_url': short_url}), content_type='application/json')
